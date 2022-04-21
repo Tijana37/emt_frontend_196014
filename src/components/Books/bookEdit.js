@@ -1,9 +1,10 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from "react-router-dom";
+//import {useHistory} from 'react-router-dom';
 
 const BookEdit = (props) => {
 
-    const history = useHistory();
+    const history = useNavigate();
     const [formData, updateFormData] = React.useState({
         name : "",
         category : 1,
@@ -26,8 +27,9 @@ const BookEdit = (props) => {
         const availableCopies = formData.availableCopies !== 0 ? formData.availableCopies : props.book.availableCopies;
 
 
-        props.onEditBook(props.product.id, name, price, quantity, category, manufacturer);
-        history.push("/products");
+        props.onEditBook(props.book.id,name, category,author,availableCopies);
+        history("/books");
+
     }
 
     return(
@@ -35,56 +37,49 @@ const BookEdit = (props) => {
             <div className="col-md-5">
                 <form onSubmit={onFormSubmit}>
                     <div className="form-group">
-                        <label htmlFor="name">Product name</label>
+                        <label htmlFor="name">Book name</label>
                         <input type="text"
                                className="form-control"
                                id="name"
                                name="name"
-                               placeholder={props.product.name}
+                               placeholder={props.book.name}
                                onChange={handleChange}
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="price">Price</label>
-                        <input type="text"
-                               className="form-control"
-                               id="price"
-                               name="price"
-                               placeholder={props.product.price}
-                               onChange={handleChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="quantity">Quantity</label>
-                        <input type="text"
-                               className="form-control"
-                               id="quantity"
-                               name="quantity"
-                               placeholder={props.product.quantity}
-                               onChange={handleChange}
-                        />
-                    </div>
+
                     <div className="form-group">
                         <label>Category</label>
                         <select name="category" className="form-control" onChange={handleChange}>
                             {props.categories.map((term) => {
-                                if(props.product.category !== undefined &&
-                                    props.product.category.id === term.id)
-                                    return <option selected={props.product.category.id} value={term.id}>{term.name}</option>
-                                else return <option value={term.id}>{term.name}</option>
+                                if(props.book.category !== undefined &&
+                                    props.book.category === term) {
+                                    console.log(props.book.category)
+                                    return <option value={props.book.category} selected={term}>{term}</option>
+                                }
+                                else return <option value={term}>{term}</option>
                             })}
                         </select>
                     </div>
                     <div className="form-group">
-                        <label>Manufacturer</label>
-                        <select name="manufacturer" className="form-control" onChange={handleChange}>
-                            {props.manufacturers.map((term) => {
-                                if(props.product.manufacturer !== undefined &&
-                                    props.product.manufacturer.id === term.id)
-                                    return <option selected={props.product.manufacturer.id} value={term.id}>{term.name}</option>
-                                else return <option value={term.id}>{term.name}</option>
+                        <label>Author</label>
+                        <select name="author" className="form-control" onChange={handleChange}>
+                            {props.authors.map((term) => {
+                                if(props.book.author !== undefined &&
+                                    props.book.author.id === term.id)
+                                    return <option selected={props.book.author.id} value={term.id}>{term.name} {term.surname}</option>
+                                else return <option value={term.id}>{term.name} {term.surname}</option>
                             })}
                         </select>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="name"> Available copies</label>
+                        <input type="text"
+                               className="form-control"
+                               id="availableCopies"
+                               name="availableCopies"
+                               placeholder={props.book.availableCopies}
+                               onChange={handleChange}
+                        />
                     </div>
                     <button id="submit" type="submit" className="btn btn-primary">Submit</button>
                 </form>

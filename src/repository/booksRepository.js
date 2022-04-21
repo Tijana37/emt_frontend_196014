@@ -1,4 +1,6 @@
-import axios from '../custom-axios/axios';
+import axios from '../axios-custom/custom-axios';
+
+
 
 const BookAppService = {
     fetchBooks: () => {
@@ -7,6 +9,10 @@ const BookAppService = {
     fetchCategories: () => {
         return axios.get("/categories");
     },
+    fetchAuthors: () => {
+        return axios.get("/authors");
+    }
+    ,
     deleteBook: (id) => {
         return axios.delete(`/books/delete/${id}`);
     },
@@ -28,6 +34,9 @@ const BookAppService = {
     },
     getBook: (id) => {
         return axios.get(`/books/${id}`);
+    },
+    markAsTaken: (id)=>{
+        return axios.get(`/books/markAsTaken/${id}`);
     }
 }
 

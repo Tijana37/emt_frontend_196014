@@ -1,14 +1,16 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
+//import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 const BookAdd = (props) => {
 
-    const history = useHistory();
+    //const history = useHistory();
+    const history = useNavigate();
     const [formData, updateFormData] = React.useState({
-        name : "",
-        category : 1,
-        author : 1,
-        availableCopies : 0
+        name: "",
+        category: 1,
+        author: 1,
+        availableCopies: 0
 
     })
 
@@ -24,12 +26,14 @@ const BookAdd = (props) => {
         const name = formData.name;
         const category = formData.category;
         const author = formData.author;
+        const availableCopies = formData.availableCopies;
 
         props.onAddBook(name, category, author, availableCopies);
-        history.push("/books");
+        //history.push("/books");
+        history('/books')
     }
 
-    return(
+    return (
         <div className="row mt-5">
             <div className="col-md-5">
                 <form onSubmit={onFormSubmit}>
@@ -49,25 +53,28 @@ const BookAdd = (props) => {
                         <label>Category</label>
                         <select name="category" className="form-control" onChange={handleChange}>
                             {props.categories.map((term) =>
-                                <option value={term.id}>{term.name}</option>
+                                <option value={term}>{term}</option>
                             )}
                         </select>
                     </div>
                     <div className="form-group">
                         <label>Author</label>
                         <select name="author" className="form-control" onChange={handleChange}>
-                            {props.author.map((term) =>
-                                <option value={term.id}>{term.name}</option>
+                            {props.authors.map((term) =>
+                                <option value={term.id}>{term.name } { term.surname}</option>
                             )}
                         </select>
                     </div>
                     <div className="form-group">
                         <label>Available copies</label>
-                        <select name="availableCopies" className="form-control" onChange={handleChange}>
-                            {props.availableCopies.map((term) =>
-                                <option value={term.id}>{term.name}</option>
-                            )}
-                        </select>
+                        <input type="text"
+                               className="form-control"
+                               id="availableCopies"
+                               name="availableCopies"
+                               required
+                               placeholder="Enter number of available copies "
+                               onChange={handleChange}
+                        />
                     </div>
                     <button id="submit" type="submit" className="btn btn-primary">Submit</button>
                 </form>
