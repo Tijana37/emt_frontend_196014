@@ -1,5 +1,5 @@
 import './App.css';
-import {React, Component} from "react";
+import React, {Component} from "react";
 import Header from "../Header/header";
 import BookAppService from "../../repository/booksRepository";
 import BookAdd from "../Books/bookAdd";
